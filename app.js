@@ -2,7 +2,7 @@ const app = Vue.createApp({
   data() {
     return {
       monsterHealth: 100,
-      monsterArmorClass: 14,
+      monsterArmorClass: 12,
       playerHealth: 100,
       playerArmorClass: 13,
       diceOutput: 0,
@@ -56,7 +56,7 @@ const app = Vue.createApp({
         } else {
           this.critical = false;
         }
-        return (this.diceOutput = num * Math.round(Math.random(1) * dice) + 1);
+        return (this.diceOutput = num * Math.round(Math.random(1) * dice) + 4);
       }
     },
     damageRoll(num, dice) {
@@ -67,6 +67,21 @@ const app = Vue.createApp({
           return (this.diceOutput = num * Math.round(Math.random(1) * dice));
         }
       }
+    },
+    healPlayer() {
+      const healValue = this.diceRoll(2, 4);
+      this.currentRound++;
+
+      if (this.playerHealth + healValue > 100) {
+        this.playerHealth = 100;
+      } else {
+        console.log(
+          'You drank a healing potion and got healed for ',
+          healValue
+        );
+        this.playerHealth += healValue;
+      }
+      this.attackPlayer();
     },
   },
 });
