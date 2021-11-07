@@ -10,13 +10,20 @@ const app = Vue.createApp({
       critical: false,
       currentRound: 0,
       winner: null,
+      logMessages: [],
     };
   },
   computed: {
     monsterBarStyles() {
+      if (this.monsterHealth < 0) {
+        return { width: '0%' };
+      }
       return { width: this.monsterHealth + '%' };
     },
     playerBarStyles() {
+      if (this.playerHealth < 0) {
+        return { width: '0%' };
+      }
       return { width: this.playerHealth + '%' };
     },
     mayUseSpecialAttack() {
@@ -54,6 +61,7 @@ const app = Vue.createApp({
       } else {
         console.log('You missed the monster! You rolled ', this.diceOutput);
       }
+      this.addLogMessage('player', 'attack', this.diceOutput);
       this.attackPlayer();
     },
     attackPlayer() {
@@ -64,6 +72,8 @@ const app = Vue.createApp({
           this.diceOutput
         );
         this.playerHealth -= this.damageRoll(1, 12);
+        this.addLogMessage('monster', 'attack', this.diceOutput);
+
         console.log('Player HP: ', this.playerHealth);
       } else {
         console.log('The monster misses! You rolled ', this.diceOutput);
@@ -100,9 +110,28 @@ const app = Vue.createApp({
           'You drank a healing potion and got healed for ',
           healValue
         );
+        this.addLogMessage('player', 'heal', healValue);
+
         this.playerHealth += healValue;
       }
       this.attackPlayer();
+    },
+    startGame() {
+      this.playerHealth = 100;
+      this.monsterHealth = 100;
+      this.winner = null;
+      this.currentRound = 0;
+      this.logMessages = [];
+    },
+    surrender() {
+      this.winner = 'monster';
+    },
+    addLogMessage(who, what, value) {
+      this.logMessages.unshift({
+        actionBy: who,
+        actionType: what,
+        actionValue: value,
+      });
     },
   },
 });
