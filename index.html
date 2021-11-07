@@ -20,18 +20,18 @@
       <section id="monster" class="container">
         <h2>Monster Health</h2>
         <div class="healthbar">
-          <div class="healthbar__value"></div>
+          <div class="healthbar__value" :style="monsterBarStyles"></div>
         </div>
       </section>
       <section id="player" class="container">
         <h2>Your Health</h2>
         <div class="healthbar">
-          <div class="healthbar__value"></div>
+          <div class="healthbar__value" :style="playerBarStyles"></div>
         </div>
       </section>
       <section id="controls">
         <button @click="attackMonster(1, 20, 1, 8)">Longsword Attack</button>
-        <button>Greatsword Attack</button>
+        <button @click="attackMonster(1, 20, 2, 6)">Greatsword Attack</button>
         <button>HEAL</button>
         <button>SURRENDER</button>
       </section>

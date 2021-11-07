@@ -9,6 +9,14 @@ const app = Vue.createApp({
       damageOutput: 0,
     };
   },
+  computed: {
+    monsterBarStyles() {
+      return { width: this.monsterHealth + '%' };
+    },
+    playerBarStyles() {
+      return { width: this.playerHealth + '%' };
+    },
+  },
   methods: {
     attackMonster(num, dice, attNum, attDice) {
       this.diceOutput = this.diceRoll(num, dice);
