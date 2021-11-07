@@ -31,7 +31,12 @@
       </section>
       <section id="controls">
         <button @click="attackMonster(1, 20, 1, 8)">Longsword Attack</button>
-        <button @click="attackMonster(1, 20, 2, 6)">Greatsword Attack</button>
+        <button
+          :disabled="mayUseSpecialAttack"
+          @click="attackMonster(1, 20, 2, 6)"
+        >
+          Greatsword Attack
+        </button>
         <button>HEAL</button>
         <button>SURRENDER</button>
       </section>
